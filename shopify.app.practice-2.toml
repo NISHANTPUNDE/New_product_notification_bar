@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "practice-2"
+client_id = "689d2b7f6ce314bb05ca8c7a873a5dca"
+application_url = "https://corp-attitude-papua-professionals.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_products,read_orders"
+
+[auth]
+redirect_urls = [
+  "https://corp-attitude-papua-professionals.trycloudflare.com/auth/callback",
+  "https://corp-attitude-papua-professionals.trycloudflare.com/auth/shopify/callback",
+  "https://corp-attitude-papua-professionals.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "amitstoreapp-dev.myshopify.com"
