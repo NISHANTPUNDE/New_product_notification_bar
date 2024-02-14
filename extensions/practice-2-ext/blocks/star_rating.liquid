@@ -1,16 +1,7 @@
-{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-<span style="color:{{ block.settings.colour }}">
-  {% render 'stars', rating: avg_rating %}
-</span>
-{% if avg_rating >= 4 %}
-  <br>
-  <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
-  {{ 'ratings.home.recommendationText' | t }}
-{% endif %}
-
+{{ 'style.css' | asset_url | stylesheet_tag }}
 {% schema %}
 {
-  "name": "Star Rating",
+  "name": "Product Notification Bar",
   "target": "section",
   "settings": [
     { "type": "product", "id": "product", "label": "product", "autofill": true },
@@ -19,3 +10,73 @@
 }
 {% endschema %}
 
+<div id="sticky" class="scrollToTopBtn">
+  <div id="dataDiv">
+    <img width="50" height="50" src="{{ product.featured_image.src | img_url: 'master' }}"/>
+    {% comment %} <img width="50" height="50" src="placeholder_image.jpg"/> {% endcomment %}
+    <div>
+      <h1 id="productname">Product Name</h1>
+      <h1 id="discount">Discount</h1>
+      <h1 id="discountprice">Discount Price</h1>
+      <p id="description">Product Description</p>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const productname = document.getElementById('productname');
+  const discount = document.getElementById('discount');
+  const discountprice = document.getElementById('discountprice');
+  const description = document.getElementById('description');
+
+  // Retrieve data from Liquid variables
+  var productId = {{ product.id }};
+  var shopId = {{ shop.id }};
+  var productPrice = {{ product.price | divided_by: 100 }};
+  var originalPrice = {{ product.compare_at_price_max | divided_by: 100 }};
+  var percentage = ((originalPrice - productPrice) / originalPrice) * 100;
+
+  console.log("productid", productId);
+  console.log("shopid", shopId);
+  console.log("original", originalPrice);
+  console.log("disc", productPrice);
+
+  // Fetch data from API
+  fetch(`http://localhost:8009/Product_Notification_Bar/productid/${productId}/shopid/${shopId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      if (data) {
+        productname.textContent = 'Name: ' + data.data[0].productname;
+        discount.textContent = 'Discount: ' + data.data[0].discount + '%';
+        discountprice.textContent = 'Discount Price: $' + data.data[0].discountprice;
+        description.textContent = 'Description: ' + data.data[0].discription;
+      } else {
+        console.log("No valid data found");
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
+  // Show/hide scroll-to-top button based on scroll position
+  var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
+  var rootElement = document.documentElement;
+
+  function handleScroll() {
+    var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+    if (rootElement.scrollTop / scrollTotal > 0.5) {
+      scrollToTopBtn.classList.add("showBtn");
+    } else {
+      scrollToTopBtn.classList.remove("showBtn");
+    }
+  }
+  document.addEventListener("scroll", handleScroll);
+});
+
+</script>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button,LegacyCard, Page, Layout, Text, TextField } from "@shopify/polaris";
+import { Button, LegacyCard, Page, Layout, Text, TextField } from "@shopify/polaris";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { Stack } from '@mui/material';
@@ -8,18 +8,18 @@ export default function PageName() {
   const { t } = useTranslation();
   const location = useLocation();
 
-  
+
   const { data } = location.state || {};
-  const [description,setDescription]=useState('')
-  const handleDescription=(value)=>{
-      setDescription(value)
+  const [description, setDescription] = useState('')
+  const handleDescription = (value) => {
+    setDescription(value)
   }
 
-  const handleDescriptionClick=()=>{
+  const handleDescriptionClick = () => {
 
   }
 
-  const initialDiscounts=data?.items.map(()=>0)
+  const initialDiscounts = data?.items.map(() => 0)
   const [discount, setDiscount] = useState(initialDiscounts);
 
   const calculateDiscountedPrice = (price, discount) => {
@@ -27,9 +27,9 @@ export default function PageName() {
     return discountedPrice.toFixed(2);
   };
 
-  const handleDiscountChange = (value,index) => {
-    const newDiscounts=[...discount]
-    newDiscounts[index]=parseFloat(value) || 0;
+  const handleDiscountChange = (value, index) => {
+    const newDiscounts = [...discount]
+    newDiscounts[index] = parseFloat(value) || 0;
     setDiscount(newDiscounts);
   };
 
@@ -38,17 +38,18 @@ export default function PageName() {
       <Layout>
         <Layout.Section>
           <LegacyCard sectioned>
-            
+
             <table>
               <thead className='t1' >
                 <tr>
-                  <th>Product ID</th>
+                  <th>Checkbox</th>
+                  {/* <th>Product ID</th> */}
                   <th>Image</th>
                   <th>Product Name</th>
                   <th>Price</th>
                   <th>Discount</th>
                   <th>Discounted Price</th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -57,7 +58,15 @@ export default function PageName() {
 
                   return (
                     <tr key={index}>
-                      <td style={{filter: "blur(2px)"}}>{item.id} </td>
+                      <td><input
+                        type='checkbox'
+                        // onChange={() => handleCheckboxChange(index)}
+                        // checked={selectedItems.includes(index)}
+                        style={{ width: "30px", height: "30px" }}
+                      ></input>
+
+                      </td>
+                      {/* <td style={{ filter: "blur(2px)" }}>{item.id} </td> */}
                       <td style={{ textAlign: "center", width: "150px" }}>
                         <img src={item.image || 'https://res.cloudinary.com/dci7ukl75/image/upload/v1668205411/defff_uhx4wz.png'} height='70' width='70' alt='profile' />
                       </td>
@@ -69,15 +78,15 @@ export default function PageName() {
                         <TextField
                           type='number'
                           value={discount[index].toString()}
-                          onChange={(value) => handleDiscountChange(value,index)}
+                          onChange={(value) => handleDiscountChange(value, index)}
                           style={{ width: "50px" }}
                           size="small"
                         />
                       </td>
                       <td style={{ textAlign: "center", width: "100px" }}>${discountedPrice}</td>
-                     
-                      
-                    
+
+
+
                     </tr>
                   );
                 })}
@@ -86,29 +95,29 @@ export default function PageName() {
           </LegacyCard>
         </Layout.Section>
 
-                
-      <Layout.Section sectioned style={{margin: "10px 50px"}}>
-                <Stack></Stack>
-      <LegacyCard title="Description" >
-            <div style={{margin: " 10px 50px 10px 50px"}}>
-            <TextField 
+
+        <Layout.Section sectioned style={{ margin: "10px 50px" }}>
+          <Stack></Stack>
+          <LegacyCard title="Description" >
+            <div style={{ margin: " 10px 50px 10px 50px" }}>
+              <TextField
                 value={description}
                 onChange={handleDescription}
-            >
+              >
 
-            </TextField> 
-            <Button 
-                  style={{marginTop: "50px"}}
-                  onClick={handleDescriptionClick}
-                  >Add Description</Button>
+              </TextField>
+              <Button
+                style={{ marginTop: "50px" }}
+                onClick={handleDescriptionClick}
+              >Add Description</Button>
             </div>
-              
+
           </LegacyCard>
-      </Layout.Section>
-      
-      
-      
-      
+        </Layout.Section>
+
+
+
+
       </Layout>
     </Page>
   );

@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-name = "practice-2"
-client_id = "689d2b7f6ce314bb05ca8c7a873a5dca"
-application_url = "https://kilometers-pavilion-bill-louise.trycloudflare.com"
+name = "Product_notification_bar"
+client_id = "5a66c7b4dbe06298dadacdfaa8167e7f"
+application_url = "https://turning-alien-grants-utc.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ scopes = "write_products,read_products,read_orders"
 
 [auth]
 redirect_urls = [
-  "https://kilometers-pavilion-bill-louise.trycloudflare.com/auth/callback",
-  "https://kilometers-pavilion-bill-louise.trycloudflare.com/auth/shopify/callback",
-  "https://kilometers-pavilion-bill-louise.trycloudflare.com/api/auth/callback"
+  "https://turning-alien-grants-utc.trycloudflare.com/auth/callback",
+  "https://turning-alien-grants-utc.trycloudflare.com/auth/shopify/callback",
+  "https://turning-alien-grants-utc.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
